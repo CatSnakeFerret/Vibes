@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 require('dotenv').config()
 console.log(`Hello ${process.env}`)
 
-const MONGO_URI = `mongodb+srv://${process.env.MDBLOGIN}:${process.env.MDBPWD}@armadillos.csx0tw6.mongodb.net/?retryWrites=true&w=majority`;
+const MONGO_URI = `mongodb+srv://oliver:${process.env.MDBPWD}@cluster0.xzmle9b.mongodb.net/`;
 
 //contains a User collection
 
