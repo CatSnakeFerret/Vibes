@@ -4,6 +4,7 @@ const router = express.Router();
 //controllers
 const userController = require('../controllers/userController.js');
 const placesController = require('../controllers/placesController');
+const cookieController = require('../controllers/cookieController.js')
 
 // signup route handler
 router.post('/signup', userController.signup, (req, res, next) => {
@@ -11,7 +12,7 @@ router.post('/signup', userController.signup, (req, res, next) => {
 });
 
 // login route handler
-router.post('/login', userController.login, (req, res, next) => {
+router.post('/login', userController.login, cookieController.setSSIDCookie, (req, res, next) => {
   res
     .status(200)
     .json({ message: 'Logged in successfully!', user: res.locals.user });
@@ -29,6 +30,10 @@ router.post('/savedList', userController.savedList, (req, res) => {
 //populate results from user initiated search
 router.post('/placeSearch', placesController.getResults, (req, res) => {
   res.status(200).send(res.locals.searchResults)
+})
+
+router.patch('/savePlace', userController.saveplace, (req, res) => {
+  res.status(200).send(res.locals.result);
 })
 
 //populate tags for searchList

@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const port = 3000;
@@ -7,6 +8,7 @@ const port = 3000;
 const apiRouter = require('./routes/apiRouter');
 
 app.use(express.json());
+app.use(cookieParser());
 
 // serve static assets from the 'build' directory
 app.use(express.static(path.join(__dirname, 'build')));
