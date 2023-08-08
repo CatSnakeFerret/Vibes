@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SavedPlace = (props) => {
+const Been = (props) => {
   const { locationID, score, tags } = props;
   console.log(locationID);
 
@@ -8,9 +8,9 @@ const SavedPlace = (props) => {
     <div>
       <div>{locationID}</div>
       <div>{score}</div>
-      <div>{tags}</div>
+      <div>{tags.join(', ')}</div>
     </div>
   );
 };
 
-export default SavedPlace;
+export default Been;
