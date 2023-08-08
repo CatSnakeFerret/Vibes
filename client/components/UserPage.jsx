@@ -37,8 +37,8 @@ const UserPage = ({ username }) => {
   };
 
   useEffect(() => {
-    getSaved();
-    getTrys();
+    // getSaved();
+    // getTrys();
   }, []);
 
   //generate rows for saved list
@@ -113,7 +113,7 @@ const UserPage = ({ username }) => {
   return (
     <div>
       {/* add a button to navigate to the search page */}
-      {/* <div className='lists'>
+      <div className='lists'>
         <div>{beenCards}</div>
         <div>{savedCards}</div>
       </div>
@@ -121,34 +121,7 @@ const UserPage = ({ username }) => {
         <button className='button' onClick={() => navigate('/search')}>
           Go to Search Page
         </button>
-      </div> */}
-      <div className='collapse bg-base-200'>
-        <div className='collapse-title text-xl font-medium'>
-          Click to open this one and close others
-        </div>
-        <div className='collapse-content'>
-          <p>hello</p>
-        </div>
       </div>
-      <div className='text-grey-50 underline'>akjsfd</div>
-      {/* <div className='collapse bg-base-200'>
-        <input type='radio' name='my-accordion-1' />
-        <div className='collapse-title text-xl font-medium'>
-          Click to open this one and close others
-        </div>
-        <div className='collapse-content'>
-          <p>hello</p>
-        </div>
-      </div>
-      <div className='collapse bg-base-200'>
-        <input type='radio' name='my-accordion-1' />
-        <div className='collapse-title text-xl font-medium'>
-          Click to open this one and close others
-        </div>
-        <div className='collapse-content'>
-          <p>hello</p>
-        </div>
-      </div> */}
     </div>
   );
 };
