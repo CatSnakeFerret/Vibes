@@ -21,6 +21,101 @@ const UserController = {
     }
   },
 
+  saveplace: async (req, res, next) => {
+    try {
+      const { ssid } = req.cookies;
+      const { username, place } = req.body;
+
+      console.log(username);
+      
+      const user = await User.findOne({ _id: ssid });
+
+      
+      if (!user) {
+        const err = new Error('Error in UserController.savedList: User not found');
+        return next(err);
+      }
+      //get savedList from user, should be an array of IDs
+      const { savedList } = user;
+      savedList.push(place);
+      user.savedList = savedList;
+      const result = await user.save()
+      res.locals.result = result;
+      console.log(result);
+      next();
+
+    }
+
+      catch (error) {
+        const err = new Error('Error in UserController.saveplace: ' + error.message);
+        return next(err);
+      }
+  },
+
+  saveplace: async (req, res, next) => {
+    try {
+      const { ssid } = req.cookies;
+      const { place } = req.body;
+      
+      const user = await User.findOne({ _id: ssid });
+
+      
+      if (!user) {
+        const err = new Error('Error in UserController.savedList: User not found');
+        return next(err);
+      }
+      //get savedList from user, should be an array of IDs
+      const { savedList } = user;
+      savedList.push(place);
+      user.savedList = savedList;
+      const result = await user.save()
+      res.locals.result = result;
+      console.log(result);
+      next();
+
+    }
+
+      catch (error) {
+        const err = new Error('Error in UserController.saveplace: ' + error.message);
+        return next(err);
+      }
+  },
+
+  rateplace: async (req, res, next) => {
+    try {
+      const { ssid } = req.cookies;
+      const { place, rating } = req.body;
+      
+      const user = await User.findOne({ _id: ssid });
+
+      
+      if (!user) {
+        const err = new Error('Error in UserController.savedList: User not found');
+        return next(err);
+      }
+      //get savedList from user, should be an array of IDs
+      const { beenList } = user;
+
+      beenList.push({
+        locationID: place,
+        score: rating,
+        tags: ['none']
+      });
+
+      user.beenList = beenList;
+      const result = await user.save()
+      res.locals.result = result;
+      console.log(result);
+      next();
+
+    }
+
+      catch (error) {
+        const err = new Error('Error in UserController.saveplace: ' + error.message);
+        return next(err);
+      }
+  },
+
   // authenticate user login
   // user credentials will be sent in the request body
   login: async (req, res, next) => {
