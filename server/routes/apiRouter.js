@@ -36,6 +36,12 @@ router.patch('/savePlace', userController.saveplace, (req, res) => {
   res.status(200).send(res.locals.result);
 })
 
+router.patch('/ratePlace', userController.rateplace, (req, res) => {
+  res.status(200).send(res.locals.result);
+})
+
+
+
 //populate tags for searchList
 // router.get('/searchTags')
 
