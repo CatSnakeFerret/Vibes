@@ -16,7 +16,7 @@ placesController.getResults = async (req, res, next) => {
         const formattedCategories = format(categories)
         const formattedNeighborhoods = format(neighborhoods)
 
-        const selectResults = `SELECT place_id, place_name, category, address, neighborhood FROM places WHERE category IN ${formattedCategories} AND neighborhood IN ${formattedNeighborhoods}`
+        const selectResults = `SELECT place_id, place_name, category, address, neighborhood FROM places2 WHERE category IN ${formattedCategories} AND neighborhood IN ${formattedNeighborhoods}`
         
         const results = await db.query(selectResults);
         res.locals.searchResults = results.rows;
