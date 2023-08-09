@@ -26,12 +26,13 @@ const UserController = {
     try {
       const { ssid } = req.cookies;
       const { place } = req.body;
-      
+
       const user = await User.findOne({ _id: ssid });
 
-      
       if (!user) {
-        const err = new Error('Error in UserController.savedList: User not found');
+        const err = new Error(
+          'Error in UserController.savedList: User not found'
+        );
         return next(err);
       }
       //get savedList from user, should be an array of IDs
@@ -40,27 +41,28 @@ const UserController = {
         savedList.push(place);
         user.savedList = savedList;
       }
-      const result = await user.save()
+      const result = await user.save();
       res.locals.result = result;
       console.log(result);
       next();
-
+    } catch (error) {
+      const err = new Error(
+        'Error in UserController.saveplace: ' + error.message
+      );
+      return next(err);
     }
-
-      catch (error) {
-        const err = new Error('Error in UserController.saveplace: ' + error.message);
-        return next(err);
-      }
   },
 
   rateplace: async (req, res, next) => {
     try {
       const { ssid } = req.cookies;
       const { place, rating } = req.body;
-      
+
       const user = await User.findOne({ _id: ssid });
       if (!user) {
-        const err = new Error('Error in UserController.savedList: User not found');
+        const err = new Error(
+          'Error in UserController.savedList: User not found'
+        );
         return next(err);
       }
       //get beenList from user, should be an array of objects
@@ -74,30 +76,28 @@ const UserController = {
           indexToModify = index;
           modify = true;
         }
-      })
+      });
       if (modify) {
         beenList[indexToModify].score = rating;
-      }
-      else {
+      } else {
         beenList.push({
           locationID: place,
           score: rating,
-          tags: ['none']
+          tags: ['none'],
         });
       }
 
       user.beenList = beenList;
-      const result = await user.save()
+      const result = await user.save();
       res.locals.result = result;
       console.log(result);
       next();
-
+    } catch (error) {
+      const err = new Error(
+        'Error in UserController.saveplace: ' + error.message
+      );
+      return next(err);
     }
-
-      catch (error) {
-        const err = new Error('Error in UserController.saveplace: ' + error.message);
-        return next(err);
-      }
   },
 
   // gets ratings to render star visual on search results
@@ -105,16 +105,18 @@ const UserController = {
     try {
       const { ssid } = req.cookies;
       const { place } = req.body;
-      
+
       const user = await User.findOne({ _id: ssid });
       if (!user) {
-        const err = new Error('Error in UserController.savedList: User not found');
+        const err = new Error(
+          'Error in UserController.savedList: User not found'
+        );
         return next(err);
       }
       //get beenList from user, should be an array of objects
       const { beenList } = user;
 
-      const result = {'rating': 0};
+      const result = { rating: 0 };
 
       beenList.forEach((location) => {
         // console.log('THE LOCATION IS')
@@ -125,20 +127,20 @@ const UserController = {
         // console.log('the place id is ' + place);
 
         if (location.locationID == place) {
-          console.log('MATCH OCCURRED')
+          console.log('MATCH OCCURRED');
           // console.log('THE LOCATION IS')
           // console.log(location);
           result.rating = location.score;
         }
-      })
+      });
       res.locals.result = result;
       next();
+    } catch (error) {
+      const err = new Error(
+        'Error in UserController.getrating: ' + error.message
+      );
+      return next(err);
     }
-
-      catch (error) {
-        const err = new Error('Error in UserController.getrating: ' + error.message);
-        return next(err);
-      }
   },
 
   // authenticate user login
@@ -171,9 +173,11 @@ const UserController = {
     try {
       const { ssid } = req.cookies;
       const user = await User.findOne({ _id: ssid });
-      
+
       if (!user) {
-        const err = new Error('Error in UserController.savedList: User not found');
+        const err = new Error(
+          'Error in UserController.savedList: User not found'
+        );
         return next(err);
       }
 
@@ -182,12 +186,14 @@ const UserController = {
       // builds query
       let query = '';
       query += savedList[0];
-      for(let i = 1; i < savedList.length; i++) {
+      for (let i = 1; i < savedList.length; i++) {
         query += ` OR place_id = ${savedList[i]}`;
       }
 
-      const savedPlaces = await db.query(`SELECT * FROM places2 WHERE place_id = ${query}`);
-      
+      const savedPlaces = await db.query(
+        `SELECT * FROM places2 WHERE place_id = ${query}`
+      );
+
       res.locals.savedList = savedPlaces.rows;
 
       return next();
@@ -201,42 +207,44 @@ const UserController = {
     try {
       const { ssid } = req.cookies;
       const user = await User.findOne({ _id: ssid });
-      
+
       if (!user) {
-        const err = new Error('Error in UserController.savedList: User not found');
+        const err = new Error(
+          'Error in UserController.savedList: User not found'
+        );
         return next(err);
       }
 
       //get beenList from user, should be an array of objects
       const { beenList } = user;
 
-      let savedList = beenList.map((location)=> {
+      let savedList = beenList.map((location) => {
         return location.locationID;
-      })
-
+      });
 
       let ratingObj = {};
 
       beenList.forEach((location) => {
         ratingObj[location.locationID] = location.score;
-      })
-
+      });
 
       let query = '';
       query += savedList[0];
-      for(let i = 1; i < savedList.length; i++) {
+      for (let i = 1; i < savedList.length; i++) {
         query += ` OR place_id = ${savedList[i]}`;
       }
-      const savedQuery = await db.query(`SELECT * FROM places2 WHERE place_id = ${query}`);
+      const savedQuery = await db.query(
+        `SELECT * FROM places2 WHERE place_id = ${query}`
+      );
 
       const savedPlaces = savedQuery.rows;
 
       savedPlaces.forEach((element, index) => {
         element.rating = ratingObj[element.place_id];
-      })
+      });
 
-      console.log(savedPlaces)
-      
+      console.log(savedPlaces);
+
       res.locals.beenList = savedPlaces;
 
       return next();
@@ -244,8 +252,7 @@ const UserController = {
       const err = new Error('Error in UserController.login: ' + error.message);
       return next(err);
     }
-  }
+  },
 };
-
 
 module.exports = UserController;

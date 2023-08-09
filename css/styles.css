@@ -14,16 +14,14 @@ tr {
   text-align: center;
 }
 
-
 /* .filterBar {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  width: 50%;
-  padding: 2em;
-  justify-content: center;
-} */
-
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 50%;
+    padding: 2em;
+    justify-content: center;
+  } */
 
 .signup-container {
   display: flex;

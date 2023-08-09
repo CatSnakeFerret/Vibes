@@ -40,7 +40,10 @@ const App = () => {
           }
         />
         {/* add the route for SearchPage */}
-        <Route path='/search' element={<SearchPage username={username} />} />{' '}
+        <Route
+          path='/search'
+          element={<SearchPage username={username} />}
+        />{' '}
         <Route path='*' element={<Navigate to='/login-signup' replace />} />
       </Routes>
     </Router>
