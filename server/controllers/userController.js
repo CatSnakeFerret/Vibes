@@ -211,11 +211,7 @@ const UserController = {
     try {
       const { ssid } = req.cookies;
       const user = await User.findOne({ _id: ssid });
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> dev
       if (!user) {
         const err = new Error(
           'Error in UserController.savedList: User not found'
@@ -226,28 +222,29 @@ const UserController = {
       //get beenList from user, should be an array of objects
       const { beenList } = user;
 
-      let savedList = beenList.map((location)=> {
+      let savedList = beenList.map((location) => {
         return location.locationID;
-      })
+      });
 
-      let ratingList = beenList.map((location)=> {
+      let ratingList = beenList.map((location) => {
         return location.score;
-      })
-
+      });
 
       let query = '';
       query += savedList[0];
-      for(let i = 1; i < savedList.length; i++) {
+      for (let i = 1; i < savedList.length; i++) {
         query += ` OR place_id = ${savedList[i]}`;
       }
-      const savedQuery = await db.query(`SELECT * FROM places2 WHERE place_id = ${query}`);
+      const savedQuery = await db.query(
+        `SELECT * FROM places2 WHERE place_id = ${query}`
+      );
 
       const savedPlaces = savedQuery.rows;
 
       savedPlaces.forEach((element, index) => {
         element.rating = ratingList[index];
-      })
-      
+      });
+
       res.locals.beenList = savedPlaces;
 
       return next();
