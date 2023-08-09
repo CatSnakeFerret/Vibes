@@ -184,21 +184,16 @@ const UserController = {
 
       //get savedList from user, should be an array of IDs
       const { savedList } = user;
+      // builds query
+      let query = '';
+      query += savedList[0];
+      for(let i = 1; i < savedList.length; i++) {
+        query += ` OR place_id = ${savedList[i]}`;
+      }
 
-      const savedPlaces = await savedList.map(place => db.query(`SELECT place_name, category, address, neighborhood FROM places WHERE place_id = ${place}`));
-
-      console.log('the saved places are' + savedPlaces);
-
-    //   const namedSavedList = await savedList.map(place => {const name = db.query(`SELECT place_name, category, address, neighborhood FROM places WHERE place_id = ${place}`);
-    //   return {
-    //     name: name,
-    //     score: placeObj.score,
-    //     tags: placeObj.tags
-    //   }
+      const savedPlaces = await db.query(`SELECT * FROM places2 WHERE place_id = ${query}`);
       
-    // });
-      
-      res.locals.savedList = savedPlaces;
+      res.locals.savedList = savedPlaces.rows;
 
       return next();
     } catch (error) {
