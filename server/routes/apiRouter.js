@@ -33,10 +33,14 @@ router.post('/placeSearch', placesController.getResults, (req, res) => {
 })
 
 router.patch('/savePlace', userController.saveplace, (req, res) => {
-  res.status(200).send(res.locals.result);
+  res.status(200).send('success');
 })
 
 router.patch('/ratePlace', userController.rateplace, (req, res) => {
+  res.status(200).send(res.locals.result);
+})
+
+router.post('/getRating', userController.getrating, (req, res) => {
   res.status(200).send(res.locals.result);
 })
 
