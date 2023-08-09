@@ -1,6 +1,7 @@
 const User = require('../../models/userModel');
 const bcrypt = require('bcryptjs');
 const db = require('../../models/placesModel');
+const { ServerDescriptionChangedEvent } = require('mongodb');
 
 const UserController = {
   // create a new user in the database
@@ -204,23 +205,40 @@ const UserController = {
 
   beenList: async (req, res, next) => {
     try {
-      const { username } = req.body;
-      const user = await User.findOne({ username: username });
+      const { ssid } = req.cookies;
+      const user = await User.findOne({ _id: ssid });
       
       if (!user) {
         const err = new Error('Error in UserController.savedList: User not found');
         return next(err);
       }
 
-      //get beenList from user, should be an array of IDs
+      //get beenList from user, should be an array of objects
       const { beenList } = user;
 
-      const namedList = await savedList.map(placeID => db.query(`SELECT name FROM Users where userID = ${placeID}`));
+      let savedList = beenList.map((location)=> {
+        return location.locationID;
+      })
 
+      let ratingList = beenList.map((location)=> {
+        return location.score;
+      })
+
+
+      let query = '';
+      query += savedList[0];
+      for(let i = 1; i < savedList.length; i++) {
+        query += ` OR place_id = ${savedList[i]}`;
+      }
+      const savedQuery = await db.query(`SELECT * FROM places2 WHERE place_id = ${query}`);
+
+      const savedPlaces = savedQuery.rows;
+
+      savedPlaces.forEach((element, index) => {
+        element.rating = ratingList[index];
+      })
       
-      
-      
-      res.locals.beenList = namedList;
+      res.locals.beenList = savedPlaces;
 
       return next();
     } catch (error) {
