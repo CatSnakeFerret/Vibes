@@ -5,9 +5,9 @@ import Rate from './Rate.jsx'
 const ResultRow = (props) => {
     const { place_id, place_name, category, address, neighborhood } = props.result
 
-    const [saveButtonText, setSaveButtonText] = useState('Save');
+    const [saveButtonText, setSaveButtonText] = useState('Save to wishlist');
     const [rating, setRating] = useState();
-    const [ratingButtonText, setRatingButtonText] = useState('Rate');
+
 
 
     const saveHandler = async () => {
@@ -20,7 +20,12 @@ const ResultRow = (props) => {
         }
     }
 
-    const rateHandler = async () => {
+    const setRatingAsync = (rating) => {
+        setRating(rating);
+        rateHandler(rating);
+    }
+
+    const rateHandler = async (rating) => {
         try {
             await axios.patch('api/ratePlace', {place: place_id, rating: rating})
             setRatingButtonText('Rated!')
@@ -50,6 +55,7 @@ const ResultRow = (props) => {
     useEffect(() => {
         initalRateHandler();
     }, [])
+
     console.log(rating);
 
     return (
@@ -57,8 +63,7 @@ const ResultRow = (props) => {
             <td>{place_name}</td>
             <td>{address}</td>
             <div style={styles.container}>
-            <Rate rating={rating} setRating={setRating}></Rate>
-            <button onClick={rateHandler}>{ratingButtonText}</button>
+            <Rate place_id={place_id} rating={rating} setRating={setRatingAsync} sendRating={rateHandler}></Rate>
             <button onClick={saveHandler}>{saveButtonText}</button>
             </div>
         </tr>
