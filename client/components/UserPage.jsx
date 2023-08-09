@@ -113,12 +113,15 @@ const UserPage = ({ username }) => {
       </div>
       {/* add a button to navigate to the search page */}
       <h1 className='flex text-5xl justify-center'>VIBE</h1>
-      <div className='text-red-900 text-lg'>
+      <div className='text-green-900 text-lg'>
         <div>BEEN TO</div>
         <div>{beenCards}</div>
       </div>
       <br></br>
-      <div>{savedCards}</div>
+      <div className='text-blue-900 text-lg'>
+        <div>WISHLIST</div>
+        <div>{savedCards}</div>
+      </div>
 
       {/* <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
         <div className='bg-white text-black p-8 shadown-lg rounded-xl w-[600px] max-w-full'>

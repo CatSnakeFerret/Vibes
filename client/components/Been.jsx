@@ -19,7 +19,7 @@ const Been = (props) => {
     <div>
       <div className='flex space-x-10' onClick={() => setIsActive(!isActive)}>
         <div>
-          {isActive ? '-' : '+'} {place_name}
+          {isActive ? '-' : '+'} {idx + 1} {place_name}
         </div>
       </div>
       {isActive && (
