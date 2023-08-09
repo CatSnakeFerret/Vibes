@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'; // import useNavigate
 import Been from './Been.jsx';
 import SavedPlace from './savedPlaceRow.jsx';
 
+
 const UserPage = ({ username }) => {
   const navigate = useNavigate(); // Use the useNavigate hook
   const [savedList, setSavedList] = useState([]);
