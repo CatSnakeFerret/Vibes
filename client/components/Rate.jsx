@@ -1,8 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { FaStar } from "react-icons/fa";
 import { Container, Radio, Rating } from "./RatingStyles";
 import axios from 'axios';
 const Rate = (props) => {
+
+    const [rating, setRating] = useState();
+
+    
+    const rateHandler = async (rating) => {
+        try {
+            await axios.patch('api/ratePlace', {place: props.place_id, rating: rating})
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    // renders rating
+    const initalRateHandler = async () => {
+        try {
+            // console.log('THE PLACE IS' + place_id)
+            const result = await axios.post('api/getRating', {place: props.place_id})
+            setRating(result.data.rating);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+    // updates rating in state and database
+    const setRatingAndState = (rating) => {
+        setRating(rating);
+        rateHandler(rating);
+    }
+    // renders existing star rating on initial page load
+    useEffect(() => {
+        initalRateHandler();
+    }, [])
 
     return (
         <Container>
@@ -14,13 +46,15 @@ const Rate = (props) => {
                             type="radio"
                             value={givenRating}
                             onClick={() => {
-                                props.setRating(givenRating)
+                                // props.setRating(givenRating)
+                                setRatingAndState(givenRating);
+
                             }}
                         />
                         <Rating>
                             <FaStar
                                 color={
-                                    givenRating < props.rating || givenRating === props.rating
+                                    givenRating < rating || givenRating === rating
                                         ? "000"
                                         : "rgb(192,192,192)"
                                 }
