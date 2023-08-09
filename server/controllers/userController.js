@@ -190,8 +190,8 @@ const UserController = {
       for(let i = 1; i < savedList.length; i++) {
         query += ` OR place_id = ${savedList[i]}`;
       }
-      
-      const savedPlaces = await db.query(`SELECT place_name, category, address, neighborhood FROM places2 WHERE place_id = ${query}`);
+
+      const savedPlaces = await db.query(`SELECT * FROM places2 WHERE place_id = ${query}`);
       
       res.locals.savedList = savedPlaces.rows;
 
