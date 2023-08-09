@@ -125,7 +125,7 @@ const SearchPage = (props) => {
         />
         <button onClick={querySQL}>Find!</button>
       </div>
-      <table>
+      <table className='text-red-900'>
         <tr>
           <th>Place</th>
           <th>Address</th>

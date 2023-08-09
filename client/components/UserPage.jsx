@@ -45,34 +45,6 @@ const UserPage = ({ username }) => {
     getTrys();
   }, []);
 
-  const beenTo = [
-    {
-      locationID: 'Seven Grams Cafe',
-      score: 4,
-      tags: ['Chill', 'Good Coffee'],
-    },
-    {
-      locationID: 'Intelligentsia Coffee Highline Coffeebar',
-      score: 4,
-      tags: ['Quiet'],
-    },
-    {
-      locationID: 'Stumptown Coffee Roasters',
-      score: 3,
-      tags: ['Chill'],
-    },
-    {
-      locationID: 'Gregorys Coffee',
-      score: 4,
-      tags: ['Outlets'],
-    },
-    {
-      locationID: 'Joe Coffee Company',
-      score: 2,
-      tags: ['Clean Bathroom'],
-    },
-  ];
-
   const beenCards = triedList.map((el, idx) => {
     return (
       <Been
@@ -89,7 +61,7 @@ const UserPage = ({ username }) => {
     );
   });
 
-  const savedCards = savedList.map((el) => {
+  const savedCards = savedList.map((el, idx) => {
     return (
       <SavedPlace
         place_id={el.place_id}
@@ -99,6 +71,7 @@ const UserPage = ({ username }) => {
         place_name={el.place_name}
         telephone={el.telephone}
         zip={el.zip}
+        idx={idx}
       ></SavedPlace>
     );
   });
@@ -123,7 +96,7 @@ const UserPage = ({ username }) => {
         <div>{savedCards}</div>
       </div>
 
-      {/* <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
+      <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
         <div className='bg-white text-black p-8 shadown-lg rounded-xl w-[600px] max-w-full'>
           <h1 className='text-3xl font-bold text-center'>
             The Barebones of an Accordion
@@ -146,7 +119,7 @@ const UserPage = ({ username }) => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };
