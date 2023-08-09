@@ -100,9 +100,14 @@ const UserPage = ({ username }) => {
     },
   ];
 
-  const beenCards = beenTo.map((el) => {
+  const beenCards = beenTo.map((el, idx) => {
     return (
-      <Been locationID={el.locationID} score={el.score} tags={el.tags}></Been>
+      <Been
+        locationID={el.locationID}
+        score={el.score}
+        tags={el.tags}
+        idx={idx}
+      ></Been>
     );
   });
 
@@ -113,10 +118,14 @@ const UserPage = ({ username }) => {
   return (
     <div>
       {/* add a button to navigate to the search page */}
-      <div className='lists'>
+      <h1 className='flex text-5xl justify-center'>VIBE</h1>
+      <div className='text-red-900 text-lg'>
+        <div>BEEN TO</div>
         <div>{beenCards}</div>
-        <div>{savedCards}</div>
       </div>
+      <br></br>
+      <div>{savedCards}</div>
+
       <div className='searchButton'>
         <button className='button' onClick={() => navigate('/search')}>
           Go to Search Page

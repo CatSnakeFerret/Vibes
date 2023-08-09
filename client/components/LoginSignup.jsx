@@ -19,7 +19,7 @@ const LoginSignup = ({ onLogin, setUser }) => {
       const response = await axios.post('api/login', { username, password });
       if (response.status === 200) {
         onLogin();
-        setUser(username)
+        setUser(username);
         navigate('/user'); // updated history.push with navigate
       } else {
         setError('Invalid credentials');
