@@ -100,6 +100,7 @@ const UserController = {
       }
   },
 
+  // gets ratings to render star visual on search results
   getrating: async (req, res, next) => {
     try {
       const { ssid } = req.cookies;
@@ -110,10 +111,8 @@ const UserController = {
         const err = new Error('Error in UserController.savedList: User not found');
         return next(err);
       }
-      //get beenList from user, should be an array of IDs
+      //get beenList from user, should be an array of objects
       const { beenList } = user;
-      
-      // console.log(beenList);
 
       const result = {'rating': 0};
 
@@ -132,12 +131,7 @@ const UserController = {
           result.rating = location.score;
         }
       })
-
-
-
-      // console.log('the result to be sent is' + result.rating)
       res.locals.result = result;
-      // console.log('the rating is' + result.rating)
       next();
     }
 
@@ -220,8 +214,11 @@ const UserController = {
         return location.locationID;
       })
 
-      let ratingList = beenList.map((location)=> {
-        return location.score;
+
+      let ratingObj = {};
+
+      beenList.forEach((location) => {
+        ratingObj[location.locationID] = location.score;
       })
 
 
@@ -235,8 +232,10 @@ const UserController = {
       const savedPlaces = savedQuery.rows;
 
       savedPlaces.forEach((element, index) => {
-        element.rating = ratingList[index];
+        element.rating = ratingObj[element.place_id];
       })
+
+      console.log(savedPlaces)
       
       res.locals.beenList = savedPlaces;
 
