@@ -9,6 +9,7 @@ module.exports = {
     static: [
       {
         directory: path.join(__dirname, 'build'),
+        // secure: false,
         publicPath: '/',
       },
     ],
