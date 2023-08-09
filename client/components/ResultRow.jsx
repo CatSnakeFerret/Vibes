@@ -9,7 +9,7 @@ const ResultRow = (props) => {
     const [rating, setRating] = useState();
 
 
-
+    // saves location to savedList in user document
     const saveHandler = async () => {
         try {
             await axios.patch('api/savePlace', {place: place_id})
@@ -20,6 +20,7 @@ const ResultRow = (props) => {
         }
     }
 
+    // updates state and updates database -- although technically updating state is unnecessary
     const setRatingAsync = (rating) => {
         setRating(rating);
         rateHandler(rating);
@@ -28,7 +29,6 @@ const ResultRow = (props) => {
     const rateHandler = async (rating) => {
         try {
             await axios.patch('api/ratePlace', {place: place_id, rating: rating})
-            setRatingButtonText('Rated!')
         }
         catch (error) {
             console.log(error);
@@ -46,12 +46,30 @@ const ResultRow = (props) => {
         }
     }
 
+    // const initalSavedHandler = async () => {
+    //     try {
+    //         // console.log('THE PLACE IS' + place_id)
+    //         const result = await axios.post('api/getSaved', {place: place_id})
+
+    //         if (result === ) {
+    //             setSaveButtonText('Saved!');
+    //         }
+
+           
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
     const styles = {
         container: {
             display: 'flex',
             flexDirection: 'row',
         }
     }
+
+    // renders existing star rating on initial page load
     useEffect(() => {
         initalRateHandler();
     }, [])
