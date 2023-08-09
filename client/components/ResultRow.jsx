@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Rate from './Rate.jsx'
 
@@ -30,12 +30,27 @@ const ResultRow = (props) => {
         }
     }
 
+    const initalRateHandler = async () => {
+        try {
+            // console.log('THE PLACE IS' + place_id)
+            const result = await axios.post('api/getRating', {place: place_id})
+            setRating(result.data.rating);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     const styles = {
         container: {
             display: 'flex',
             flexDirection: 'row',
         }
     }
+    useEffect(() => {
+        initalRateHandler();
+    }, [])
+    console.log(rating);
 
     return (
         <tr>

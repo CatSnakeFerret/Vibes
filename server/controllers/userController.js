@@ -24,37 +24,6 @@ const UserController = {
   saveplace: async (req, res, next) => {
     try {
       const { ssid } = req.cookies;
-      const { username, place } = req.body;
-
-      console.log(username);
-      
-      const user = await User.findOne({ _id: ssid });
-
-      
-      if (!user) {
-        const err = new Error('Error in UserController.savedList: User not found');
-        return next(err);
-      }
-      //get savedList from user, should be an array of IDs
-      const { savedList } = user;
-      savedList.push(place);
-      user.savedList = savedList;
-      const result = await user.save()
-      res.locals.result = result;
-      console.log(result);
-      next();
-
-    }
-
-      catch (error) {
-        const err = new Error('Error in UserController.saveplace: ' + error.message);
-        return next(err);
-      }
-  },
-
-  saveplace: async (req, res, next) => {
-    try {
-      const { ssid } = req.cookies;
       const { place } = req.body;
       
       const user = await User.findOne({ _id: ssid });
@@ -66,8 +35,10 @@ const UserController = {
       }
       //get savedList from user, should be an array of IDs
       const { savedList } = user;
-      savedList.push(place);
-      user.savedList = savedList;
+      if (!savedList.includes(place)) {
+        savedList.push(place);
+        user.savedList = savedList;
+      }
       const result = await user.save()
       res.locals.result = result;
       console.log(result);
@@ -87,20 +58,32 @@ const UserController = {
       const { place, rating } = req.body;
       
       const user = await User.findOne({ _id: ssid });
-
-      
       if (!user) {
         const err = new Error('Error in UserController.savedList: User not found');
         return next(err);
       }
-      //get savedList from user, should be an array of IDs
+      //get beenList from user, should be an array of objects
       const { beenList } = user;
 
-      beenList.push({
-        locationID: place,
-        score: rating,
-        tags: ['none']
-      });
+      let indexToModify;
+      let modify = false;
+
+      beenList.forEach((location, index) => {
+        if (place == location.locationID) {
+          indexToModify = index;
+          modify = true;
+        }
+      })
+      if (modify) {
+        beenList[indexToModify].score = rating;
+      }
+      else {
+        beenList.push({
+          locationID: place,
+          score: rating,
+          tags: ['none']
+        });
+      }
 
       user.beenList = beenList;
       const result = await user.save()
@@ -112,6 +95,53 @@ const UserController = {
 
       catch (error) {
         const err = new Error('Error in UserController.saveplace: ' + error.message);
+        return next(err);
+      }
+  },
+
+  getrating: async (req, res, next) => {
+    try {
+      const { ssid } = req.cookies;
+      const { place } = req.body;
+      
+      const user = await User.findOne({ _id: ssid });
+      if (!user) {
+        const err = new Error('Error in UserController.savedList: User not found');
+        return next(err);
+      }
+      //get beenList from user, should be an array of IDs
+      const { beenList } = user;
+      
+      // console.log(beenList);
+
+      const result = {'rating': 0};
+
+      beenList.forEach((location) => {
+        // console.log('THE LOCATION IS')
+        // console.log(location);
+        // console.log('THE PLACE IS')
+        // console.log(place)
+        // console.log('the location id is ' + location.locationID)
+        // console.log('the place id is ' + place);
+
+        if (location.locationID == place) {
+          console.log('MATCH OCCURRED')
+          // console.log('THE LOCATION IS')
+          // console.log(location);
+          result.rating = location.score;
+        }
+      })
+
+
+
+      // console.log('the result to be sent is' + result.rating)
+      res.locals.result = result;
+      // console.log('the rating is' + result.rating)
+      next();
+    }
+
+      catch (error) {
+        const err = new Error('Error in UserController.getrating: ' + error.message);
         return next(err);
       }
   },
@@ -144,8 +174,8 @@ const UserController = {
   //getting saved list from mongo
   savedList: async (req, res, next) => {
     try {
-      const { username } = req.body;
-      const user = await User.findOne({ username: username });
+      const { ssid } = req.cookies;
+      const user = await User.findOne({ _id: ssid });
       
       if (!user) {
         const err = new Error('Error in UserController.savedList: User not found');
@@ -155,16 +185,20 @@ const UserController = {
       //get savedList from user, should be an array of IDs
       const { savedList } = user;
 
-      const namedSavedList = await savedList.map(placeObj => {const name = db.query(`SELECT name FROM Users where userID = ${placeObj.locationID}`);
-      return {
-        name: name,
-        score: placeObj.score,
-        tags: placeObj.tags
-      }
+      const savedPlaces = await savedList.map(place => db.query(`SELECT place_name, category, address, neighborhood FROM places WHERE place_id = ${place}`));
+
+      console.log('the saved places are' + savedPlaces);
+
+    //   const namedSavedList = await savedList.map(place => {const name = db.query(`SELECT place_name, category, address, neighborhood FROM places WHERE place_id = ${place}`);
+    //   return {
+    //     name: name,
+    //     score: placeObj.score,
+    //     tags: placeObj.tags
+    //   }
       
-    });
+    // });
       
-      res.locals.savedList = namedSavedList;
+      res.locals.savedList = savedPlaces;
 
       return next();
     } catch (error) {
@@ -187,6 +221,9 @@ const UserController = {
       const { beenList } = user;
 
       const namedList = await savedList.map(placeID => db.query(`SELECT name FROM Users where userID = ${placeID}`));
+
+      
+      
       
       res.locals.beenList = namedList;
 
