@@ -4,18 +4,6 @@ import { Container, Radio, Rating } from "./RatingStyles";
 import axios from 'axios';
 const Rate = (props) => {
 
-    // const rateHandler = async () => {
-    //     try {
-    //         await axios.patch('api/ratePlace', {place: props.place_id, rating: props.rating})
-    //         // setRatingButtonText('Rated!')
-    //     }
-    //     catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
-
-
     return (
         <Container>
             {[...Array(5)].map((item, index) => {
