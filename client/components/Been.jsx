@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
 
 const Been = (props) => {
-  const { locationID, score, tags, idx } = props;
+  const {
+    address,
+    category,
+    neighborhood,
+    place_id,
+    place_name,
+    telephone,
+    zip,
+    rating,
+    idx,
+  } = props;
 
   const [isActive, setIsActive] = useState(false);
 
@@ -9,16 +19,21 @@ const Been = (props) => {
     <div>
       <div className='flex space-x-10' onClick={() => setIsActive(!isActive)}>
         <div>
-          {isActive ? '-' : '+'} {locationID}
+          {isActive ? '-' : '+'} {place_name}
         </div>
       </div>
       {isActive && (
-        <div className='space-x-1 text-sm'>
-          <div>
-            123 Coffee Ave, New York, NY 10001 | www.{locationID.slice(0, 5)}
-            .com
+        <div>
+          <div className='space-x-1 text-sm flex'>
+            <div>{address} |</div>
+            <div> {zip} |</div>
+            <div> {telephone !== 'N/A' ? telephone : 'no phone'}</div>
           </div>
-          <div className='space-y-10 text-xs'>Tags: {tags.join(', ')}</div>
+          <div className='space-x-1 text-sm flex'>
+            <div>{neighborhood} |</div>
+            <div> Category: {category} |</div>
+            <div> Rating: {rating}</div>
+          </div>
         </div>
       )}
     </div>

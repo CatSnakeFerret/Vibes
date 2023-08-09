@@ -24,12 +24,14 @@ const UserPage = ({ username }) => {
   };
   const getTrys = async () => {
     try {
+      // console.log('lo÷ok here');
       //query userRouter/tried with username in body
       const response = await axios.post('/api/beenList', { username });
       //server should return an array of objects
       if (response.status === 200) {
         //check if it's in response.data!
-        setTriedList(response.data);
+        setTriedList(response.data.beenList);
+        // console.log('HELLO', response.data);
       }
     } catch (err) {
       console.error(err);
@@ -37,40 +39,11 @@ const UserPage = ({ username }) => {
   };
 
   useEffect(() => {
-    // getSaved();
-    // getTrys();
+    // setTimeout(() => getSaved(), 1000);
+
+    getSaved();
+    getTrys();
   }, []);
-
-  //generate rows for saved list
-  const savedRows = savedList.map((savedPlace) => {
-    return (
-      <tr>
-        <td>{savedPlace}</td>
-      </tr>
-    );
-  });
-  //generate rows for tried list
-  const triedRows = triedList.map((triedPlace) => {
-    const name = triedPlace.name;
-    const score = triedPlace.score;
-    const tags = triedPlace.tags;
-    return (
-      <tr>
-        <td>{name}</td>
-        <td>{score}</td>
-        <td>{tags}</td>
-      </tr>
-    );
-  });
-
-  // hard coded saved spots
-  const savedSpots = [
-    'Capital One Cafe',
-    'Bean & Bean Chelsea',
-    'Gregorys Coffee',
-    'Variety Coffee Roasters',
-    "King's Street Coffee",
-  ];
 
   const beenTo = [
     {
@@ -100,33 +73,54 @@ const UserPage = ({ username }) => {
     },
   ];
 
-  const beenCards = beenTo.map((el, idx) => {
+  const beenCards = triedList.map((el, idx) => {
     return (
       <Been
-        locationID={el.locationID}
-        score={el.score}
-        tags={el.tags}
         idx={idx}
+        rating={el.rating}
+        place_id={el.place_id}
+        address={el.address}
+        category={el.category}
+        neighborhood={el.neighborhood}
+        place_name={el.place_name}
+        telephone={el.telephone}
+        zip={el.zip}
       ></Been>
     );
   });
 
-  const savedCards = savedSpots.map((el) => {
-    return <SavedPlace locationID={el}></SavedPlace>;
+  const savedCards = savedList.map((el) => {
+    return (
+      <SavedPlace
+        place_id={el.place_id}
+        address={el.address}
+        category={el.category}
+        neighborhood={el.neighborhood}
+        place_name={el.place_name}
+        telephone={el.telephone}
+        zip={el.zip}
+      ></SavedPlace>
+    );
   });
 
+  console.log(triedList);
   return (
     <div>
+      <div className='searchButton'>
+        <button className='button' onClick={() => navigate('/search')}>
+          Go to Search Page
+        </button>
+      </div>
       {/* add a button to navigate to the search page */}
       <h1 className='flex text-5xl justify-center'>VIBE</h1>
-      {/* <div className='text-red-900 text-lg'>
+      <div className='text-red-900 text-lg'>
         <div>BEEN TO</div>
         <div>{beenCards}</div>
       </div>
       <br></br>
-      <div>{savedCards}</div> */}
+      <div>{savedCards}</div>
 
-      <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
+      {/* <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
         <div className='bg-white text-black p-8 shadown-lg rounded-xl w-[600px] max-w-full'>
           <h1 className='text-3xl font-bold text-center'>
             The Barebones of an Accordion
@@ -149,13 +143,7 @@ const UserPage = ({ username }) => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className='searchButton'>
-        <button className='button' onClick={() => navigate('/search')}>
-          Go to Search Page
-        </button>
-      </div>
+      </div> */}
     </div>
   );
 };
