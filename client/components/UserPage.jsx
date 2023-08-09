@@ -33,10 +33,10 @@ const UserPage = ({ username }) => {
     }
   };
 
-  useEffect(() => {
-    getSaved();
-    getTrys();
-  }, []);
+  // useEffect(() => {
+  //   getSaved();
+  //   getTrys();
+  // }, []);
 
   //generate rows for saved list
   const savedRows = savedList.map((savedPlace) => {
