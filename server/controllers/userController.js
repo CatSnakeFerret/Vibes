@@ -65,9 +65,18 @@ const UserController = {
         );
         return next(err);
       }
+      
       //get beenList from user, should be an array of objects
       const { beenList } = user;
+      const { savedList } = user;
 
+      // checks savedList for this location and removes if present
+      if (savedList.includes(place)) {
+        savedList.splice(savedList.indexOf(place), 1)
+        user.savedList = savedList;
+      }
+
+      // checks been list for existing rating
       let indexToModify;
       let modify = false;
 
@@ -77,6 +86,8 @@ const UserController = {
           modify = true;
         }
       });
+      
+      // modifies been list rating
       if (modify) {
         beenList[indexToModify].score = rating;
       } else {
