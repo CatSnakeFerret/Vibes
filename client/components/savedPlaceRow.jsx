@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Rate from './Rate.jsx';
+import axios from 'axios';
 
 const SavedPlace = (props) => {
   const {
@@ -12,6 +13,7 @@ const SavedPlace = (props) => {
     zip,
     idx,
     clickFn,
+    deleteHandler,
   } = props;
 
   const [isActive, setIsActive] = useState(false);
@@ -30,7 +32,7 @@ const SavedPlace = (props) => {
 
   return (
     <div className='m-2'>
-      <div className='card w-64 h-64 bg-yellow-100 shadow-xl text-green-900'>
+      <div className='card w-72 h-72 bg-yellow-100 shadow-xl text-green-900'>
         <div className='card-body p-3'>
           <h2 className='card-title text-lg justify-center'>{place_name}</h2>
           <div className='space-x-1 text-sm flex justify-center '>
@@ -48,6 +50,9 @@ const SavedPlace = (props) => {
           {/* <div className='card-actions justify-end'>
             <button className='btn btn-primary'>Buy Now</button>
           </div> */}
+          <button className='btn' onClick={() => deleteHandler(place_id)}>
+            remove
+          </button>
         </div>
       </div>
     </div>
