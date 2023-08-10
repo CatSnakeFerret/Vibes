@@ -5,6 +5,7 @@ import Rate from './Rate.jsx';
 const ResultRow = (props) => {
   const { place_id, place_name, category, address, neighborhood } =
     props.result;
+  const { idx } = props;
   const [saveButtonText, setSaveButtonText] = useState('Save to wishlist');
 
   // saves location to savedList in user document
@@ -27,12 +28,22 @@ const ResultRow = (props) => {
 
   return (
     <tr>
+      <td>{idx + 1}</td>
       <td>{place_name}</td>
+      <td>{category}</td>
+      <td>{neighborhood}</td>
       <td>{address}</td>
-      <div style={styles.container}>
+      <td>
         <Rate place_id={place_id} clickFn={clickFn}></Rate>
-        <button onClick={saveHandler}>{saveButtonText} </button>
-      </div>
+      </td>
+      <td>
+        <button
+          onClick={saveHandler}
+          className='bg-blue-500 hover:bg-yellow-400 text-black  py-2 px-4 rounded'
+        >
+          {saveButtonText}{' '}
+        </button>
+      </td>
     </tr>
   );
 };
