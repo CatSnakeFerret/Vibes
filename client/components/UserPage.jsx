@@ -56,6 +56,7 @@ const UserPage = ({ username }) => {
     return (
       <Been
         idx={idx}
+        key={idx}
         rating={el.rating}
         place_id={el.place_id}
         address={el.address}
@@ -64,8 +65,7 @@ const UserPage = ({ username }) => {
         place_name={el.place_name}
         telephone={el.telephone}
         zip={el.zip}
-        clickFn={clickFn}
-      ></Been>
+        clickFn={clickFn}></Been>
     );
   });
 
@@ -80,8 +80,8 @@ const UserPage = ({ username }) => {
         telephone={el.telephone}
         zip={el.zip}
         idx={idx}
-        clickFn={clickFn}
-      ></SavedPlace>
+        key={idx}
+        clickFn={clickFn}></SavedPlace>
     );
   });
 
