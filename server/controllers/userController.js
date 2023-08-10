@@ -43,7 +43,7 @@ const UserController = {
       }
       const result = await user.save();
       res.locals.result = result;
-      console.log(result);
+      //console.log(result);
       next();
     } catch (error) {
       const err = new Error(
@@ -65,14 +65,14 @@ const UserController = {
         );
         return next(err);
       }
-      
+
       //get beenList from user, should be an array of objects
       const { beenList } = user;
       const { savedList } = user;
 
       // checks savedList for this location and removes if present
       if (savedList.includes(place)) {
-        savedList.splice(savedList.indexOf(place), 1)
+        savedList.splice(savedList.indexOf(place), 1);
         user.savedList = savedList;
       }
 
@@ -86,7 +86,7 @@ const UserController = {
           modify = true;
         }
       });
-      
+
       // modifies been list rating
       if (modify) {
         beenList[indexToModify].score = rating;
@@ -101,7 +101,7 @@ const UserController = {
       user.beenList = beenList;
       const result = await user.save();
       res.locals.result = result;
-      console.log(result);
+      //console.log(result);
       next();
     } catch (error) {
       const err = new Error(
@@ -138,7 +138,7 @@ const UserController = {
         // console.log('the place id is ' + place);
 
         if (location.locationID == place) {
-          console.log('MATCH OCCURRED');
+          //console.log('MATCH OCCURRED');
           // console.log('THE LOCATION IS')
           // console.log(location);
           result.rating = location.score;
@@ -254,7 +254,7 @@ const UserController = {
         element.rating = ratingObj[element.place_id];
       });
 
-      console.log(savedPlaces);
+      //console.log(savedPlaces);
 
       res.locals.beenList = savedPlaces;
 
