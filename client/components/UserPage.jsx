@@ -52,18 +52,6 @@ const UserPage = ({ username }) => {
 
   const clickFn = () => location.reload();
 
-  const initalRateHandler = async () => {
-    try {
-      // console.log('THE PLACE IS' + place_id)
-      const result = await axios.post('api/getRating', {
-        place: props.place_id,
-      });
-      setRating(result.data.rating);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const beenCards = triedList.map((el, idx) => {
     return (
       <Been
@@ -77,7 +65,6 @@ const UserPage = ({ username }) => {
         telephone={el.telephone}
         zip={el.zip}
         clickFn={clickFn}
-        initalRateHandler={initalRateHandler}
       ></Been>
     );
   });
@@ -94,7 +81,6 @@ const UserPage = ({ username }) => {
         zip={el.zip}
         idx={idx}
         clickFn={clickFn}
-        initalRateHandler={() => console.log('still doin nothin')}
       ></SavedPlace>
     );
   });

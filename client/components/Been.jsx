@@ -13,7 +13,6 @@ const Been = (props) => {
     rating,
     idx,
     clickFn,
-    initalRateHandler,
   } = props;
 
   const [isActive, setIsActive] = useState(false);
@@ -35,12 +34,7 @@ const Been = (props) => {
           <div className='space-x-1 text-sm flex'>
             <div>{neighborhood} |</div>
             <div> Category: {category} |</div>
-            <Rate
-              initalRateHandler={initalRateHandler}
-              key={place_id}
-              place_id={place_id}
-              clickFn={clickFn}
-            ></Rate>
+            <Rate key={place_id} place_id={place_id} clickFn={clickFn}></Rate>
           </div>
         </div>
       )}
