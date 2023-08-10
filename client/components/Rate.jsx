@@ -49,7 +49,7 @@ const Rate = (props) => {
               onClick={() => {
                 // props.setRating(givenRating)
                 setRatingAndState(givenRating);
-                props.clickFn();
+                // props.clickFn();
                 // console.log(rating);
               }}
             />

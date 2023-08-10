@@ -39,16 +39,22 @@ const UserPage = ({ username }) => {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      getSaved();
-      getTrys();
-      // location.reload();
-    }, 1000);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     getSaved();
+  //     getTrys();
+  //     // location.reload();
+  //   }, 1000);
 
-    // getSaved();
-    // getTrys();
-  }, [savedList]);
+  //   // getSaved();
+  //   // getTrys();
+  // }, [savedList]);
+
+
+  useEffect(() => {
+    getSaved();
+    getTrys();
+  }, []);
 
   const clickFn = () => location.reload();
 
