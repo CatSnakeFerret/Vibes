@@ -154,6 +154,52 @@ const UserController = {
     }
   },
 
+  deleteplace: async (req, res, next) => {
+    try {
+      const { ssid } = req.cookies;
+      const { place } = req.body;
+
+      const user = await User.findOne({ _id: ssid });
+      if (!user) {
+        const err = new Error(
+          'Error in UserController.savedList: User not found'
+        );
+        return next(err);
+      }
+      //get beenList from user, should be an array of objects
+
+      const { beenList, savedList } = user;
+      
+      let result;
+
+      if (savedList.includes(place)) {
+        const result = savedList.splice(savedList.indexOf(place), 1);
+        user.savedList = savedList;
+        user.save();
+        res.locals.result = `deleted ${result}`
+        next();
+      }
+
+      beenList.forEach((location, index) => {
+        if (location.locationID == place) {
+          const result = beenList.splice(index, 1)
+          user.beenList = beenList;
+          user.save();
+          res.locals.result = `deleted ${result}`
+          next();
+        }
+      });
+
+      res.locals.result = 'nothing to delete';
+      next();
+    } catch (error) {
+      const err = new Error(
+        'Error in UserController.getrating: ' + error.message
+      );
+      return next(err);
+    }
+  },
+
   // authenticate user login
   // user credentials will be sent in the request body
   login: async (req, res, next) => {

@@ -57,6 +57,12 @@ router.post('/getRating', userController.getrating, (req, res) => {
   res.status(200).send(res.locals.result);
 });
 
+router.post('/deletePlace', userController.deleteplace, (req, res) => {
+  res.status(200).send(res.locals.result);
+});
+
+
+
 //populate tags for searchList
 // router.get('/searchTags')
 
