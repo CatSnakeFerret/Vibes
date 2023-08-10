@@ -84,6 +84,7 @@ const UserPage = ({ username }) => {
         telephone={el.telephone}
         zip={el.zip}
         idx={idx}
+        key={idx}
         clickFn={clickFn}
       ></SavedPlace>
     );
