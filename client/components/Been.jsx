@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Rate from './Rate.jsx';
 
 const Been = (props) => {
   const {
@@ -32,7 +33,7 @@ const Been = (props) => {
           <div className='space-x-1 text-sm flex'>
             <div>{neighborhood} |</div>
             <div> Category: {category} |</div>
-            <div> Rating: {rating}</div>
+            <Rate place_id={place_id}></Rate>
           </div>
         </div>
       )}
