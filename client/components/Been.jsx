@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Rate from './Rate.jsx';
+import axios from 'axios';
 
 const Been = (props) => {
   const {
@@ -13,6 +14,7 @@ const Been = (props) => {
     rating,
     idx,
     clickFn,
+    deleteHandler,
   } = props;
 
   const [isActive, setIsActive] = useState(false);
@@ -51,6 +53,12 @@ const Been = (props) => {
           {/* <div className='card-actions justify-end'>
             <button className='btn btn-primary'>Buy Now</button>
           </div> */}
+          <button
+            className='btn btn-primary'
+            onClick={() => deleteHandler(place_id)}
+          >
+            remove
+          </button>
         </div>
       </div>
     </div>

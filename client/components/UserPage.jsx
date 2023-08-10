@@ -50,6 +50,15 @@ const UserPage = ({ username }) => {
     getTrys();
   }, []);
 
+  const deleteHandler = async (place_id) => {
+    try {
+      const result = await axios.post('api/deletePlace', { place: place_id });
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const clickFn = () => location.reload(); // helper function to hard reload on new rating set (NOT IN USE)
 
   // iterate through the beenList and map into Been components passing down the schema properties (INCL RATINGS)
@@ -68,6 +77,7 @@ const UserPage = ({ username }) => {
           telephone={el.telephone}
           zip={el.zip}
           clickFn={clickFn}
+          deleteHandler={deleteHandler}
         ></Been>
       );
     });
@@ -86,6 +96,7 @@ const UserPage = ({ username }) => {
         idx={idx}
         key={idx}
         clickFn={clickFn}
+        deleteHandler={deleteHandler}
       ></SavedPlace>
     );
   });
@@ -110,7 +121,7 @@ const UserPage = ({ username }) => {
         </button>
       </div>
       {/* add a button to navigate to the search page */}
-      <h1 className='flex text-5xl justify-center mb-10'>VIBE</h1>
+      <h1 className='flex text-5xl justify-center mb-10'>🍹 ISSA VIBE 🌴</h1>
       <h2 className='flex text-3xl justify-center mb-1 bg-red-100'>BEEN TO</h2>
       <div className='text-blue-900 text-lg flex justify-center'>
         <div className='flex flex-wrap justify-center'>{beenCards}</div>
