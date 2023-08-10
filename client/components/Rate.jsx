@@ -16,17 +16,17 @@ const Rate = (props) => {
     }
   };
   // renders rating
-  const initalRateHandler = async () => {
-    try {
-      // console.log('THE PLACE IS' + place_id)
-      const result = await axios.post('api/getRating', {
-        place: props.place_id,
-      });
-      setRating(result.data.rating);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   const initalRateHandler = async () => {
+  //     try {
+  //       // console.log('THE PLACE IS' + place_id)
+  //       const result = await axios.post('api/getRating', {
+  //         place: props.place_id,
+  //       });
+  //       setRating(result.data.rating);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
   // updates rating in state and database
   const setRatingAndState = (rating) => {
     setRating(rating);
@@ -34,7 +34,7 @@ const Rate = (props) => {
   };
   // renders existing star rating on initial page load
   useEffect(() => {
-    initalRateHandler();
+    props.initalRateHandler();
   }, []);
 
   return (
@@ -49,7 +49,7 @@ const Rate = (props) => {
               onClick={() => {
                 // props.setRating(givenRating)
                 setRatingAndState(givenRating);
-                location.reload();
+                // props.clickFn();
                 // console.log(rating);
               }}
             />
