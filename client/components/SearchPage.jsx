@@ -98,9 +98,9 @@ const SearchPage = (props) => {
             Back to Homepage
           </button>
         </div>
-        <h1 className='flex text-3xl justify-center mb-1 bg-red-100 align-middle'>
+        <h2 className='flex text-3xl justify-center mb-1 bg-red-100 align-middle mb-3'>
           Search Guide
-        </h1>
+        </h2>
       </div>
       <div className='flex'>
         <div className='searchContainer flex'>
@@ -134,25 +134,27 @@ const SearchPage = (props) => {
 
         <table className='table auto sml-6 mr-6 flex flex-wrap'>
           {/* head */}
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Place</th>
-              <th>Category</th>
-              <th>Neighborhood</th>
-              <th>Address</th>
-              <th>Rating</th>
+          <thead className='text-sm '>
+            <tr className='sticky'>
+              <th className='sticky'>#</th>
+              <th className='sticky'>Place</th>
+              <th className='sticky'>Category</th>
+              <th className='sticky'>Neighborhood</th>
+              <th className='sticky'>Address</th>
+              <th className='sticky'>Rating</th>
               <th>__</th>
             </tr>
           </thead>
-          {results.map((result, index) => (
-            <ResultRow
-              key={index}
-              idx={index}
-              result={result}
-              username={props.username}
-            />
-          ))}
+          <tbody>
+            {results.map((result, index) => (
+              <ResultRow
+                key={index}
+                idx={index}
+                result={result}
+                username={props.username}
+              />
+            ))}
+          </tbody>
         </table>
       </div>
     </div>

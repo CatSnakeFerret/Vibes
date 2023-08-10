@@ -39,7 +39,7 @@ const ResultRow = (props) => {
       <td>
         <button
           onClick={saveHandler}
-          className='bg-blue-500 hover:bg-yellow-400 text-black  py-2 px-4 rounded'
+          className='hover:bg-yellow-400 text-black py-2 px-4 rounded'
         >
           {saveButtonText}{' '}
         </button>
