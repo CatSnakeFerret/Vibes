@@ -91,39 +91,44 @@ const SearchPage = (props) => {
   ];
 
   return (
-    <div className='searchContainer'>
-      <div className='searchButton'>
-        <button className='button' onClick={() => navigate('/user')}>
-          Back to Homepage
-        </button>
+    <div>
+      <div>
+        <div className='searchButton'>
+          <button className='button' onClick={() => navigate('/user')}>
+            Back to Homepage
+          </button>
+        </div>
+        <h1 className='flex text-3xl justify-center mb-1 bg-red-100'>
+          Search Guide
+        </h1>
       </div>
-      <h1>Guide</h1>
-      <div className='filterBar'>
-        <label>Category</label>
-        <ReactSelect
-          name='categories'
-          options={categoriesOptions}
-          value={categories.map((value) => ({ value, label: value }))}
-          onChange={handleChange}
-          isMulti
-        />
-        <label>Neighborhood</label>
-        <ReactSelect
-          name='neighborhoods'
-          options={neighborhoodOptions}
-          value={neighborhoods.map((value) => ({ value, label: value }))}
-          onChange={handleChange}
-          isMulti
-        />
-        <label>Tags</label>
-        <ReactSelect
-          name='tags'
-          options={tagOptions}
-          value={tags.map((value) => ({ value, label: value }))}
-          onChange={handleChange}
-          isMulti
-        />
-        <button onClick={querySQL}>Find!</button>
+      <div className='searchContainer flex'>
+        <div className='filterBar w-80 m-10'>
+          <label>Category</label>
+          <ReactSelect
+            name='categories'
+            options={categoriesOptions}
+            value={categories.map((value) => ({ value, label: value }))}
+            onChange={handleChange}
+            isMulti
+          />
+          <br />
+          <label>Neighborhood</label>
+          <ReactSelect
+            name='neighborhoods'
+            options={neighborhoodOptions}
+            value={neighborhoods.map((value) => ({ value, label: value }))}
+            onChange={handleChange}
+            isMulti
+          />
+          <br />
+          <button
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+            onClick={querySQL}
+          >
+            Find!
+          </button>
+        </div>
       </div>
       <table className='text-red-900'>
         <tr>

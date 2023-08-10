@@ -8,7 +8,7 @@ import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 const UserPage = ({ username }) => {
   const navigate = useNavigate(); // Use the useNavigate hook
   const [savedList, setSavedList] = useState([]);
-  const [triedList, setTriedList] = useState([]);
+  const [beenList, setBeenList] = useState([]);
 
   const getSaved = async () => {
     try {
@@ -16,65 +16,63 @@ const UserPage = ({ username }) => {
       const response = await axios.post('/api/savedList', { username });
       //server should return an array of saved places already queried for name
       if (response.status === 200) {
-        //check if it's in response.data!!
+        //check if it's in response.data and reset savedList
         setSavedList(response.data.savedList);
       }
     } catch (err) {
       console.error(err);
     }
   };
+
   const getTrys = async () => {
     try {
-      // console.log('lo÷ok here');
       //query userRouter/tried with username in body
       const response = await axios.post('/api/beenList', { username });
       //server should return an array of objects
       if (response.status === 200) {
-        //check if it's in response.data!
-        setTriedList(response.data.beenList);
-        // console.log('HELLO', response.data);
+        //check if it's in response.data and reset beenList
+        setBeenList(response.data.beenList);
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     getSaved();
-  //     getTrys();
-  //     // location.reload();
-  //   }, 1000);
-
-  //   // getSaved();
-  //   // getTrys();
-  // }, [savedList]);
-
-
+  // on initial load, query and set from db savedList and beenList
   useEffect(() => {
+    // setTimeout(() => {
+    //     getSaved();
+    //     getTrys();
+    //     // location.reload();
+    //   }, 1000);
+
     getSaved();
     getTrys();
   }, []);
 
-  const clickFn = () => location.reload();
+  const clickFn = () => location.reload(); // helper function to hard reload on new rating set (NOT IN USE)
 
-  const beenCards = triedList.map((el, idx) => {
-    return (
-      <Been
-        idx={idx}
-        rating={el.rating}
-        place_id={el.place_id}
-        address={el.address}
-        category={el.category}
-        neighborhood={el.neighborhood}
-        place_name={el.place_name}
-        telephone={el.telephone}
-        zip={el.zip}
-        clickFn={clickFn}
-      ></Been>
-    );
-  });
+  // iterate through the beenList and map into Been components passing down the schema properties (INCL RATINGS)
+  const beenCards = beenList
+    .sort((a, b) => b.rating - b.rating)
+    .map((el, idx) => {
+      return (
+        <Been
+          idx={idx}
+          rating={el.rating}
+          place_id={el.place_id}
+          address={el.address}
+          category={el.category}
+          neighborhood={el.neighborhood}
+          place_name={el.place_name}
+          telephone={el.telephone}
+          zip={el.zip}
+          clickFn={clickFn}
+        ></Been>
+      );
+    });
 
+  // iterate through the savedList and map into Been components passing down the schema properties
   const savedCards = savedList.map((el, idx) => {
     return (
       <SavedPlace
@@ -111,15 +109,15 @@ const UserPage = ({ username }) => {
         </button>
       </div>
       {/* add a button to navigate to the search page */}
-      <h1 className='flex text-5xl justify-center'>VIBE</h1>
-      <div className='text-blue-900 text-lg'>
-        <div>BEEN TO</div>
-        <div>{beenCards}</div>
+      <h1 className='flex text-5xl justify-center mb-10'>VIBE</h1>
+      <h2 className='flex text-3xl justify-center mb-1 bg-red-100'>BEEN TO</h2>
+      <div className='text-blue-900 text-lg flex justify-center'>
+        <div className='flex flex-wrap justify-center'>{beenCards}</div>
       </div>
       <br></br>
+      <h2 className='flex text-3xl justify-center mb-1 bg-red-100'>WISHLIST</h2>
       <div className='text-blue-900 text-lg'>
-        <div>WISHLIST</div>
-        <div>{savedCards}</div>
+        <div className='flex flex-wrap justify-center'>{savedCards}</div>
       </div>
 
       {/* <div className='bg-gray-100 flex justify-center items-center min-h-screen'>

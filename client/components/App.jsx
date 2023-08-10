@@ -10,8 +10,8 @@ import UserPage from './UserPage.jsx';
 import SearchPage from './SearchPage.jsx'; // import the SearchPage
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [username, setUsername] = useState('AL3');
 
   return (
     <Router>
