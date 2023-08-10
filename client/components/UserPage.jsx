@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // import useNavigate
 import Been from './Been.jsx';
 import SavedPlace from './savedPlaceRow.jsx';
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet';
 
 const UserPage = ({ username }) => {
   const navigate = useNavigate(); // Use the useNavigate hook
@@ -39,15 +40,17 @@ const UserPage = ({ username }) => {
   };
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   getSaved();
-    //   getTrys();
-    //   // location.reload();
-    // }, 1000);
+    setTimeout(() => {
+      getSaved();
+      getTrys();
+      // location.reload();
+    }, 1000);
 
-    getSaved();
-    getTrys();
-  }, []);
+    // getSaved();
+    // getTrys();
+  }, [savedList]);
+
+  const clickFn = () => location.reload();
 
   const beenCards = triedList.map((el, idx) => {
     return (
@@ -61,6 +64,7 @@ const UserPage = ({ username }) => {
         place_name={el.place_name}
         telephone={el.telephone}
         zip={el.zip}
+        clickFn={clickFn}
       ></Been>
     );
   });
@@ -76,6 +80,7 @@ const UserPage = ({ username }) => {
         telephone={el.telephone}
         zip={el.zip}
         idx={idx}
+        clickFn={clickFn}
       ></SavedPlace>
     );
   });
@@ -83,6 +88,17 @@ const UserPage = ({ username }) => {
   // console.log(triedList);
   return (
     <div>
+      {/* <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+        />
+        <Marker position={[51.505, -0.09]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer> */}
       <div className='searchButton'>
         <button className='button' onClick={() => navigate('/search')}>
           Go to Search Page

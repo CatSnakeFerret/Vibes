@@ -11,6 +11,7 @@ const SavedPlace = (props) => {
     telephone,
     zip,
     idx,
+    clickFn,
   } = props;
 
   const [isActive, setIsActive] = useState(false);
@@ -32,7 +33,7 @@ const SavedPlace = (props) => {
           <div className='space-x-1 text-sm flex'>
             <div>{neighborhood} |</div>
             <div> Category: {category} |</div>
-            <Rate place_id={place_id}></Rate>
+            <Rate place_id={place_id} clickFn={clickFn}></Rate>
           </div>
         </div>
       )}
