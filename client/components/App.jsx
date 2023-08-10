@@ -11,7 +11,7 @@ import SearchPage from './SearchPage.jsx'; // import the SearchPage
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [username, setUsername] = useState('AL test');
+  const [username, setUsername] = useState('AL2');
 
   return (
     <Router>

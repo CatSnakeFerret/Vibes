@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'; // import useNavigate
 import Been from './Been.jsx';
 import SavedPlace from './savedPlaceRow.jsx';
 
-
 const UserPage = ({ username }) => {
   const navigate = useNavigate(); // Use the useNavigate hook
   const [savedList, setSavedList] = useState([]);
@@ -40,7 +39,11 @@ const UserPage = ({ username }) => {
   };
 
   useEffect(() => {
-    // setTimeout(() => getSaved(), 1000);
+    // setTimeout(() => {
+    //   getSaved();
+    //   getTrys();
+    //   // location.reload();
+    // }, 1000);
 
     getSaved();
     getTrys();
@@ -77,7 +80,7 @@ const UserPage = ({ username }) => {
     );
   });
 
-  console.log(triedList);
+  // console.log(triedList);
   return (
     <div>
       <div className='searchButton'>
@@ -87,7 +90,7 @@ const UserPage = ({ username }) => {
       </div>
       {/* add a button to navigate to the search page */}
       <h1 className='flex text-5xl justify-center'>VIBE</h1>
-      <div className='text-green-900 text-lg'>
+      <div className='text-blue-900 text-lg'>
         <div>BEEN TO</div>
         <div>{beenCards}</div>
       </div>
@@ -97,7 +100,7 @@ const UserPage = ({ username }) => {
         <div>{savedCards}</div>
       </div>
 
-      <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
+      {/* <div className='bg-gray-100 flex justify-center items-center min-h-screen'>
         <div className='bg-white text-black p-8 shadown-lg rounded-xl w-[600px] max-w-full'>
           <h1 className='text-3xl font-bold text-center'>
             The Barebones of an Accordion
@@ -120,7 +123,7 @@ const UserPage = ({ username }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
