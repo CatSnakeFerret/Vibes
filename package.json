@@ -1,7 +1,7 @@
 {
   "name": "",
   "version": "1.0.0",
-  "description": "",
+  "description": "oh hey",
   "main": "index.js",
   "jest": {
     "globalSetup": "./jest-setup.js",
@@ -38,9 +38,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
+    "@babel/plugin-transform-runtime": "^7.22.10",
     "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
+    "@testing-library/jest-dom": "^5.17.0",
     "autoprefixer": "^9.8.6",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^29.6.2",
     "babel-loader": "^9.1.3",
     "css-loader": "^6.8.1",
@@ -71,6 +74,7 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
+  
   "nodemonConfig": {
     "ignore": [
       "",
